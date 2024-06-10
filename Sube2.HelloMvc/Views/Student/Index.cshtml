@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Sube2.HelloMvc.Models.Ogrenci>
+
+@{
+    ViewData["Title"] = "Öğrenci Listesi";
+}
+
+<div class="container mt-5">
+    <h1 class="display-4 text-center mb-4">Öğrenci Listesi</h1>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Numara</th>
+                <th>Dersler</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ogrenci in Model)
+            {
+                <tr>
+                    <td>@ogrenci.Ad</td>
+                    <td>@ogrenci.Soyad</td>
+                    <td>@ogrenci.Numara</td>
+                    <td>
+                        @foreach (var ders in ogrenci.Dersler)
+                        {
+                            <span>@ders.Dersad</span>
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="EditStudent" asp-route-id="@ogrenci.Ogrenciid">Düzenle</a>
+                        <a class="btn btn-success" asp-action="AddDersForOgrenci" asp-controller="Ders" asp-route-id="@ogrenci.Ogrenciid">Ders Ata</a>
+                        <form asp-action="DeleteStudent" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@ogrenci.Ogrenciid" />
+                            <input type="submit" value="Sil" class="btn btn-danger" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" asp-action="AddStudent">Öğrenci Ekle</a>
+</div>
